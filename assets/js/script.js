@@ -1,4 +1,4 @@
-const searchList = $(".sidenav-menu");
+const searchList = $(".custom-sidenav");
 const forecastCards = $(".forecast-cards");
 
 const APIkey = "a718a3edd5e0eea00f271a7877b47a08";
@@ -18,13 +18,16 @@ function getAPI() {
       })
       .then(function (data) {
 
+        console.log(data);
+
         if ($("#error-message")) {
             $("#error-message").remove();
         }
 
         if (data.cod >= 400) {
-            let errorMessage = $("<p></p>").attr("id","error-message").text(data.message);
+            let errorMessage = $("<p>" + data.message + "</p>").attr("id","error-message");
             $(".form-outline").append(errorMessage);
+            console.log(data.message);
             return
         }
 
@@ -91,7 +94,7 @@ function getAPI() {
             for (i = 1; i < 6; i++) {
               // Date
               let forecastDate = moment.unix(data.daily[i].dt).format("MM/DD/YYYY");
-              
+
               // Icon representation of weather conditions
               let forecastIcon = data.daily[i].weather[0].icon; 
               let forecastIconDescription = data.current.weather[0].description;
@@ -150,7 +153,7 @@ function renderSearchList() {
     for (i=0; i < searchArray.length; i++) {
 
         const makeCityList = $("<li></li>");
-        const makeCityButton = $("<button></button>").attr("class", "city-button").attr("id","city" + i).text(searchArray[i]);
+        const makeCityButton = $("<button></button>").attr("class", "city-button col-1").attr("id","city" + i).text(searchArray[i]);
         makeCityList.append(makeCityButton);
         searchList.append(makeCityList);        
     }
@@ -181,10 +184,10 @@ function renderWeatherCards() {
   $("#current-humidity").text("Humidity: " + currentCardArray[0].humidity + "%");
   $("#current-wind-speed").text("Wind: " + currentCardArray[0].wind + " MPH");
   $("#current-UV-index").text("UV Index: ");
-  
   let colorUV = $("<span>" + currentCardArray[0].uvi + "</span>");
   $("#current-UV-index").append(colorUV);
-  colorUV.attr("id", "UVText");
+  colorUV.addClass("UVText");
+
   if (currentCardArray[0].uvi < 3) {
     colorUV.removeAttr("id", "UVRed");
     colorUV.removeAttr("id", "UVOrange");
