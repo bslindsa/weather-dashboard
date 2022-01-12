@@ -24,6 +24,7 @@
 
 .custom-sidenav {
     float: left;
+    height: 100%;
 }
 
 .search-header {
@@ -83,6 +84,11 @@
     position: relative;
     left: 2%;
     font-size: 3vw;
+}
+
+.forecast-cards {
+    float: right;
+    margin-right: 0.5%;
 }
 
 .forecast {

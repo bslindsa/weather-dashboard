@@ -3,7 +3,7 @@ const forecastCards = $(".forecast-cards");
 
 const APIkey = "a718a3edd5e0eea00f271a7877b47a08";
 
-let cityName;
+let cityName = 'New York';
 let search;
 let searchArray = JSON.parse(localStorage.getItem("search-city")) || [];
 let currentCardArray = JSON.parse(localStorage.getItem("current-weather")) || [];
@@ -33,8 +33,6 @@ function getAPI() {
 
         let getCity = data.name;
 
-
-
         if (search) {
           for (i = 0; i < searchArray.length; i++) {
             let isContainedWithin = searchArray[i].toLowerCase();
@@ -50,8 +48,8 @@ function getAPI() {
             searchArray.pop();
           }
 
-          localStorage.setItem("search-city", JSON.stringify(searchArray))
-          renderSearchList();
+        localStorage.setItem("search-city", JSON.stringify(searchArray))
+        renderSearchList();
         }
         
 
@@ -67,6 +65,9 @@ function getAPI() {
             console.log(data);
             // TO DO: Set all data to currentCardArray & forcastCardArray and separate to external function.
             // Set variables to local storage in arrays.
+
+            // City name
+            // let cityName = data.name;
 
             // Date
             let currentDate = moment.unix(data.current.dt).format("MM/DD/YYYY");
@@ -176,6 +177,7 @@ function renderSearchList() {
 
 function renderWeatherCards() {
 
+
   // Set text for html elements of current weather card.
   $("#current-card-header").text(currentCardArray[0].name + " " + "(" + currentCardArray[0].date + ")");
   $("#current-icon").attr("src", "https://openweathermap.org/img/wn/" + currentCardArray[0].icon + "@2x.png");
@@ -188,6 +190,7 @@ function renderWeatherCards() {
   $("#current-UV-index").append(colorUV);
   colorUV.addClass("UVText");
 
+  // Set color of UVI status based on UVI value
   if (currentCardArray[0].uvi < 3) {
     colorUV.removeAttr("id", "UVRed");
     colorUV.removeAttr("id", "UVOrange");
@@ -227,10 +230,14 @@ function renderWeatherCards() {
 
 renderSearchList();
 
-renderWeatherCards();
+if (currentCardArray.length !== 0) {
+  renderWeatherCards();
+}
+
 
 $("#myBtn").on("click", function() {
   cityName = $("#search-input-sidenav").val().toLowerCase();
   search = true;
   getAPI();
+  // console.log(currentCardArray);
 });
