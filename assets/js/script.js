@@ -10,7 +10,7 @@ let currentCardArray = JSON.parse(localStorage.getItem("current-weather")) || []
 let forecastCardArray = JSON.parse(localStorage.getItem("forecast-weather")) || [{},{},{},{},{}];
 
 function getAPI() {
-  let queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + APIkey;
+  let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + APIkey;
 
     fetch(queryURL)
       .then(function (response) {
